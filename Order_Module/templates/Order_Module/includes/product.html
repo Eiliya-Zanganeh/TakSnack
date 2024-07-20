@@ -1,0 +1,46 @@
+{% load poll_extras %}
+
+
+
+
+
+
+
+{% for product in products %}
+    <tr class="total-price">
+        <td class="product-thumbnail p-0" style="width: 100px">
+            <img src="{{ media_url }}/{{ product.product.image }}" alt="Image"
+                 class="img-fluid w-100 p-lg-3 ">
+        </td>
+        <td class="product-name" style="width: 100px">
+            <h2 class="h5 text-black">{{ product.product.name }}</h2>
+        </td>
+        <td>
+            {% if product.product.offer_price %}<h5 class="offer-price">{{ product.product.offer_price| three_digits_currency }}</h5>{% endif %}
+            <h5 class="price{% if product.product.offer_price %} offer{% endif %}">{{ product.product.price| three_digits_currency }}</h5>
+        </td>
+        <td class="p-0">
+            <div class="input-group mb-3 d-flex align-products-center quantity-container m-auto"
+                 style="max-width: 120px;">
+                <div class="input-group-prepend d-flex justify-content-center">
+                    <button class="btn btn-outline-black decrease" type="button">&minus;</button>
+                </div>
+                <input type="text" class="form-control text-center quantity-amount price-count"
+                       value="{{ product.count }}"
+                       placeholder="" aria-label="Example text with button addon"
+                       aria-describedby="button-addon1"
+                       minlength="1"
+                       name="{{ name }}"
+                       id="{{ product.id }}"
+                >
+                <div class="input-group-append d-flex justify-content-center">
+                    <button class="btn btn-outline-black increase" type="button">&plus;</button>
+                </div>
+            </div>
+        </td>
+        <td><a href="{% url 'remove_product_url' product_name=name product_id=product.id %}" type="button"
+               class="btn btn-black btn-sm remove">X</a></td>
+    </tr>
+{% endfor %}
+
+

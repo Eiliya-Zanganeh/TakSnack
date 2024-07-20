@@ -1,0 +1,59 @@
+{% load poll_extras %}
+{% load static %}
+
+<div class="product-section pb-0 pt-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 mx-auto text-center">
+                <h2 class="section-title">{{ title }}</h2>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="text-center swiper testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                    <div class="p-4 swiper-wrapper">
+                        {% for product in products %}
+                            <a href="{% url 'add_product_url' product_name=product_name product_id=product.id %}"
+                               class="product-item p-2 swiper-slide">
+                                <div class="position-relative">
+                                    <img src="{{ product.image.url }}"
+                                         class="img-fluid product-thumbnail rounded-circle w-100 non-selectable"
+                                         alt="...">
+                                    {% if product.offer_price %}
+                                        <span style="left: 18%; top:3%; border-radius: 10%; width: 20%"
+                                              class="position-absolute bg-danger text-light non-selectable">
+                                            {{ product.offer }}%
+                                            </span>
+                                    {% endif %}
+                                </div>
+                                <h6 class="non-selectable"
+                                    style="height:40px;max-height: 40px; overflow-y: hidden; text-overflow: ellipsis;">
+                                    {{ product.name }}
+                                </h6>
+                                {% if product.offer_price %}
+                                    <h5 class="product-price text-center non-selectable">
+                                        {{ product.offer_price| three_digits_currency }}
+                                    </h5>
+                                {% endif %}
+                                <h5 class="{% if product.offer_price %}offer{% else %}product-price{% endif %} non-selectable">
+                                    {{ product.price| three_digits_currency }}
+                                </h5>
+                                {% if product.offer_price %}
+                                    <h5><br></h5>
+                                {% endif %}
+                                <span class="icon-cross">
+								    <img src="{% static 'cross.svg' %}" class="img-fluid">
+                                </span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    <div class="swiper-pagination"></div>
+
+                    <!-- If we need navigation buttons -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

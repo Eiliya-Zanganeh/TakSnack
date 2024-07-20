@@ -1,0 +1,10 @@
+{% load static %}
+<nav class="navbar navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home_url' %}">TakSnack</a>
+        <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+            <li><a class="nav-link" href="{% url 'cart_url' %}"><img src="{% static 'images/cart.svg' %}"></a></li>
+        </ul>
+    </div>
+</nav>

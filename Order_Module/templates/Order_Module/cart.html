@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load poll_extras %}
+
+
+{% block body %}
+        {% include 'includes/header.html' %}
+    {% if sandwiches or drinks or special_suggestions %}
+        <div class="untree_co-section before-footer-section">
+            <div class="container">
+                <div class="row mb-5">
+                    <form class="col-md-12" method="post">
+                        <div class="site-blocks-table">
+                            <table style="direction: rtl" class="table">
+                                <thead>
+                                <tr>
+                                    <th class="product-thumbnail ps-5 pe-5 p-lg-1 p-md-1"></th>
+                                    <th class="product-name" style="width: 400px!important;">نام محصول</th>
+                                    <th class="product-price">قیمت</th>
+                                    <th class="product-quantity" style="width: 300px!important;">تعداد </th>
+                                    <th class="product-remove" style="width: 50px!important;">حذف محصول</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if sandwiches %}
+                                    {% include 'Order_Module/includes/product.html' with products=sandwiches name='sandwiches' %}
+                                {% endif %}
+                                {% if drinks %}
+                                    {% include 'Order_Module/includes/product.html' with products=drinks name='drinks' %}
+                                {% endif %}
+                                {% if special_suggestions %}
+                                    {% include 'Order_Module/includes/product.html' with products=special_suggestions name='special_suggestions' %}
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 pl-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-8 d-flex justify-content-center me-3">
+                                        <a href="{% url 'home_url' %}" type="button"
+                                           class="btn btn-black btn-lg py-3 btn-block m-auto">
+                                            بازگشت به صفحه محصولات
+                                        </a>
+                                    </div>
+                                </div>
+                                <br><br><br>
+                                <div class="row">
+                                    <div class="col-md-9 text-right border-bottom mb-5">
+                                        <h3 class="text-black h4 text-uppercase text-center">مجموع خرید</h3>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <span class="text-black">قیمت کل ( قبل از تخفیف )</span>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <strong class="text-black price-label">{{ total_price| three_digits_currency }}</strong>
+                                    </div>
+                                </div>
+                                <div class="row mb-5">
+                                    <div class="col-6">
+                                        <span class="text-black">قیمت نهایی ( بعد از تخفیف )</span>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <strong class="text-black offer-label">{{ total_price_offer| three_digits_currency }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-5 mb-md-0">
+                        <h2 class="h3 mb-3 text-black">فرم اطلاعات</h2>
+                        <form id="form" class="p-3 p-lg-5 border bg-white rounded-3" method="post"
+                              action="{% url 'submit_order_url' %}">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="c_fname" class="text-black">نام و نام خانوادگی <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="full_name" name="full_name">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="c_lname" class="text-black">شماره تماس <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="phone" name="phone">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="c_address" class="text-black">آدرس <span
+                                        class="text-danger">*</span></label>
+                                <textarea name="address" id="address" cols="30" rows="5"
+                                          class="form-control"
+                                          placeholder="آدرس خود را وارد کنید..."></textarea>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button"
+                                            class="btn btn-black btn-lg py-3 btn-block m-auto submit-bottom">
+                                        ارسال سفارش
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="d-flex justify-content-center align-center flex-column" style="height: 100vh">
+            <div class="m-auto dir-rtl">
+                <h1>سبد خرید شما خالی است.</h1>
+                <h3 class="text-center">
+                    <a class="text-decoration-none btn border-success" href="{% url 'home_url' %}">بازدید محصولات</a>
+                </h3>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

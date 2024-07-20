@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ site_setting.name }}{% endblock %}
+
+{% block body %}
+
+    {% include 'includes/header.html' %}
+
+    {% include 'Home_Module/includes/banner.html' with site_banners=site_banners %}
+
+    {% include 'includes/product-slider.html' with products=special_sandwiches product_name="sandwiches" title='فروش ویژه ساندویچ' %}
+
+    {% include 'includes/product-slider.html' with products=special_suggestions product_name="special_suggestions" title='پیشنهادات ویژه' %}
+
+    {% include 'includes/product-slider.html' with products=best_selling_sandwiches product_name="sandwiches" title='محصولات پرفروش' %}
+
+    {% include 'includes/product-slider.html' with products=drinks product_name="drinks" title='نوشیدنی ها' %}
+
+    {% include 'includes/product-slider.html' with products=all_sandwiches product_name="sandwiches" title='همه ساندویچ ها' %}
+
+
+
+        {% include 'includes/footer.html' %}
+{% endblock %}
